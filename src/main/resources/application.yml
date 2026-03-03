@@ -1,0 +1,39 @@
+spring:
+    ai:
+        openai:
+            api-key: ${HUGGINGFACE_TOKEN}
+            base-url: https://router.huggingface.co
+            chat:
+                options:
+                    model: meta-llama/Llama-3.2-3B-Instruct
+
+    application:
+        name: Comment-to-Ticket-Triage
+
+    datasource:
+        url: jdbc:h2:mem:pulsedesk;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        driverClassName: org.h2.Driver
+        username: user
+        password: 1234
+        hibernate:
+            ddl-auto: none
+
+    h2:
+        console:
+            enabled: true
+
+    flyway:
+        enabled: true
+        locations: classpath:/db/migration
+        target: latest
+        baseline-version: 1
+        baseline-on-migrate: true
+        clean-disabled: true
+
+    messages:
+        basename: lang/messages
+        encoding: UTF-8
+
+logging:
+    level:
+        org.flywaydb: DEBUG
