@@ -21,7 +21,6 @@
             this.aiService = aiService;
         }
 
-        @Transactional
         public long processComment(CommentDto commentDto) {
             Comment comment = commentMapper.toEntity(commentDto);
             repository.saveAndFlush(comment);

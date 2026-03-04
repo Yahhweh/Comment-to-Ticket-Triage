@@ -1,0 +1,83 @@
+MESSAGE: The main payment gateway is returning a 502 Bad Gateway error and no transactions are going through
+TITLE: Payment gateway 502 bad gateway
+CATEGORY: bug
+PRIORITY: high
+SUMMARY: The primary payment gateway is unresponsive, returning a 502 error and completely blocking all customer transactions
+===
+MESSAGE: Some text overlaps on the settings page when I view it on my iPad
+TITLE: Text overlap in settings page
+CATEGORY: bug
+PRIORITY: low
+SUMMARY: Text elements are overlapping on the settings page when accessed via an iPad in portrait mode
+===
+MESSAGE: It would be amazing if we could export the analytics reports directly to a PDF file
+TITLE: Export analytics to PDF format
+CATEGORY: feature
+PRIORITY: medium
+SUMMARY: Users are requesting the ability to directly export their analytics reports into a downloadable PDF format
+===
+MESSAGE: My credit card was charged $50 instead of the standard $30 plan I signed up for
+TITLE: Incorrect subscription charge amount processed
+CATEGORY: billing
+PRIORITY: high
+SUMMARY: A customer was erroneously billed fifty dollars instead of the expected thirty dollars
+===
+MESSAGE: I lost my 2FA device and I cannot log into my administrator account
+TITLE: Lost 2FA device administrator lockout
+CATEGORY: account
+PRIORITY: high
+SUMMARY: An administrator is unable to access their account due to a lost two-factor authentication device
+===
+MESSAGE: Where can I find the privacy policy document? The link in the footer is broken
+TITLE: Broken privacy policy footer link
+CATEGORY: other
+PRIORITY: medium
+SUMMARY: The hyperlink pointing to the privacy policy in the website footer is currently returning an error
+===
+MESSAGE: Do you offer any partnership programs for local marketing agencies?
+TITLE: Inquiry regarding agency partnership programs
+CATEGORY: other
+PRIORITY: low
+SUMMARY: A local marketing agency is inquiring about potential partnership or affiliate opportunities
+===
+MESSAGE: We need SAML SSO integration immediately as our enterprise security policy requires it for all third-party tools
+TITLE: SAML SSO enterprise integration request
+CATEGORY: feature
+PRIORITY: high
+SUMMARY: Enterprise client is blocked from using the platform due to missing SAML single sign-on integration capability
+===
+MESSAGE: Whenever I try to upload a profile picture using the Android application, it crashes instantly
+TITLE: Android app profile picture crash
+CATEGORY: bug
+PRIORITY: medium
+SUMMARY: The Android mobile application experiences an immediate fatal crash during the profile picture upload process
+===
+MESSAGE: I typed my email wrong during registration and haven't received the verification link, can you change it?
+TITLE: Registration email address correction needed
+CATEGORY: account
+PRIORITY: medium
+SUMMARY: A new user provided an incorrect email address during signup and requires manual correction to verify
+===
+MESSAGE: Could you please send me a copy of the VAT invoice for my last subscription payment?
+TITLE: Request for previous VAT invoice
+CATEGORY: billing
+PRIORITY: low
+SUMMARY: Customer is requesting a copy of the value-added tax invoice for their most recent subscription cycle
+===
+MESSAGE: The API documentation seems to be completely missing the endpoints for user management
+TITLE: Missing user management API documentation
+CATEGORY: other
+PRIORITY: medium
+SUMMARY: The developer documentation portal is missing all reference materials regarding the user management API endpoints
+===
+MESSAGE: I spent three hours writing a report, clicked save, and it completely disappeared from my dashboard
+TITLE: Complete data loss on save
+CATEGORY: bug
+PRIORITY: high
+SUMMARY: A critical data persistence failure caused a user to permanently lose a newly created report upon saving
+===
+MESSAGE: My eyes hurt when working late, it would be nice to have a dark theme switch
+TITLE: Dark mode UI theme toggle
+CATEGORY: feature
+PRIORITY: low
+SUMMARY: User is requesting a dark mode user interface theme to improve visibility and reduce eye strain

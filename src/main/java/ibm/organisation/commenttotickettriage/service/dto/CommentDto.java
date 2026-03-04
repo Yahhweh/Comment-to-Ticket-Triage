@@ -17,7 +17,5 @@ public class CommentDto {
     private Long id;
 
     @NotBlank(message = "{comment.content.notblank}")
-    @Pattern(regexp = "^(?=.*[A-Za-z])[A-Za-z0-9]+\\s+[A-Za-z0-9]+(\\s+[A-Za-z0-9]+)*$",
-        message = "{comment.content.regexp}")
     private String content;
 }
