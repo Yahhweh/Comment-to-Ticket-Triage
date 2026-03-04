@@ -7,19 +7,29 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 public class CommentRequestController {
 
-    CommentService service;
+    private final CommentService service;
 
     public CommentRequestController(CommentService service) {
         this.service = service;
     }
 
     @PostMapping(value = "/comments")
-    public ResponseEntity<String> getComment(@RequestBody @Valid CommentDto commentDto){
-        service.processedComment(commentDto);
-        return ResponseEntity.ok("Comment processed");
+    public ResponseEntity<String> createComment(@RequestBody @Valid CommentDto commentDto){
+        Long id = service.processComment(commentDto);
+
+        URI location = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(id)
+            .toUri();
+
+        return ResponseEntity.created(location).body("Comment processed");
     }
 }

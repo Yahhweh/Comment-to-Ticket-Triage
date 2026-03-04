@@ -1,11 +1,14 @@
 spring:
+    config:
+        import: "optional:file:secrets.yml"
     ai:
         openai:
-            api-key: ${HUGGINGFACE_TOKEN}
+            api-key: ${huggingface.token}
             base-url: https://router.huggingface.co
             chat:
                 options:
                     model: meta-llama/Llama-3.2-3B-Instruct
+                    stream: false
 
     application:
         name: Comment-to-Ticket-Triage
@@ -37,3 +40,4 @@ spring:
 logging:
     level:
         org.flywaydb: DEBUG
+

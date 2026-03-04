@@ -16,7 +16,6 @@ import java.time.LocalTime;
 public interface CommentMapper {
 
     @Mapping(target = "timestamp", expression = "java(LocalDateTime.now())")
-    @Mapping(target = "processed", constant = "false")
     @Mapping(target = "content", source = "content")
     Comment toEntity(CommentDto dto);
 

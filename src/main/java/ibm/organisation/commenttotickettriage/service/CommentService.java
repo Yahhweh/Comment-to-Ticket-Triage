@@ -1,27 +1,32 @@
-package ibm.organisation.commenttotickettriage.service;
+    package ibm.organisation.commenttotickettriage.service;
 
-import ibm.organisation.commenttotickettriage.ai.client.CommentAiClient;
-import ibm.organisation.commenttotickettriage.entity.Comment;
-import ibm.organisation.commenttotickettriage.service.dto.CommentDto;
-import ibm.organisation.commenttotickettriage.repository.CommentRepository;
-import ibm.organisation.commenttotickettriage.service.mapper.CommentMapper;
-import org.springframework.stereotype.Service;
+    import ibm.organisation.commenttotickettriage.entity.Comment;
+    import ibm.organisation.commenttotickettriage.service.dto.CommentDto;
+    import ibm.organisation.commenttotickettriage.repository.CommentRepository;
+    import ibm.organisation.commenttotickettriage.service.mapper.CommentMapper;
+    import jakarta.persistence.EntityNotFoundException;
+    import org.springframework.stereotype.Service;
+    import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class CommentService {
-    private final CommentAiClient commentAiClient;
-    private final CommentRepository repository;
-    private final CommentMapper commentMapper;
+    @Service
+    public class CommentService {
+        private final CommentRepository repository;
+        private final CommentMapper commentMapper;
+        private final AiService aiService;
 
-    public CommentService(CommentAiClient commentAiClient, CommentRepository repository,
-                          CommentMapper commentMapper) {
-        this.commentAiClient = commentAiClient;
-        this.repository = repository;
-        this.commentMapper = commentMapper;
+        public CommentService(CommentRepository repository, CommentMapper commentMapper,
+                              AiService aiService) {
+            this.repository = repository;
+            this.commentMapper = commentMapper;
+            this.aiService = aiService;
+        }
+
+        @Transactional
+        public long processComment(CommentDto commentDto) {
+            Comment comment = commentMapper.toEntity(commentDto);
+            repository.saveAndFlush(comment);
+            aiService.getResponse(comment);
+
+            return comment.getId();
+        }
     }
-
-    public void processedComment(CommentDto commentDto){
-        Comment comment = commentMapper.toEntity(commentDto);
-        repository.save(comment);
-    }
-}

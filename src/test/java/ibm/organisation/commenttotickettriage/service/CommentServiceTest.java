@@ -37,7 +37,7 @@ class CommentServiceTest {
 
         when(commentMapper.toEntity(dto)).thenReturn(expectedEntity);
 
-        commentService.processedComment(dto);
+        commentService.processComment(dto);
 
         verify(commentMapper).toEntity(dto);
         verify(repository).save(expectedEntity);

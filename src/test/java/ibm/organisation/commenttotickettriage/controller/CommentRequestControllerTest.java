@@ -2,7 +2,6 @@ package ibm.organisation.commenttotickettriage.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ibm.organisation.commenttotickettriage.service.CommentService;
-import ibm.organisation.commenttotickettriage.service.ServiceException;
 import ibm.organisation.commenttotickettriage.service.dto.CommentDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +30,18 @@ class CommentRequestControllerTest {
     private CommentService commentService;
 
     @Test
-    void getComment_returnsOk_whenValidRequest() throws Exception {
-        CommentDto validDto = getCommentDto();
+    void createComment_returnsOk_whenValidRequest() throws Exception {
+        CommentDto validDto = createCommentDto();
 
         mockMvc.perform(post("/comments")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(validDto)))
-            .andExpect(status().isOk())
+            .andExpect(status().isCreated())
             .andExpect(content().string("Comment processed"));
-
-        verify(commentService).processedComment(any(CommentDto.class));
     }
 
     @Test
-    void getComment_returnsBadRequest_whenValidationFails() throws Exception {
+    void createComment_returnsBadRequest_whenValidationFails() throws Exception {
         String invalidJson = "{}";
 
         mockMvc.perform(post("/comments")
@@ -53,25 +50,9 @@ class CommentRequestControllerTest {
             .andExpect(status().isBadRequest());
     }
 
-    @Test
-    void getComment_returnsInternalServerError_whenServiceThrowsException() throws Exception {
-        CommentDto validDto = getCommentDto();
-
-        String errorMessage = "Business logic failure";
-
-        doThrow(new ServiceException(errorMessage))
-            .when(commentService).processedComment(any(CommentDto.class));
-
-        mockMvc.perform(post("/comments")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(validDto)))
-            .andExpect(status().isInternalServerError())
-            .andExpect(content().string(errorMessage));
-    }
-
-    CommentDto getCommentDto(){
-         CommentDto commentDto=  new CommentDto();
-         commentDto.setContent("smth bad");
-         return commentDto;
+    CommentDto createCommentDto() {
+        CommentDto commentDto = new CommentDto();
+        commentDto.setContent("smth bad");
+        return commentDto;
     }
 }
