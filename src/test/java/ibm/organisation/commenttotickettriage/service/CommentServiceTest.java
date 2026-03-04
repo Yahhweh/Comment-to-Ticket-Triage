@@ -1,6 +1,5 @@
 package ibm.organisation.commenttotickettriage.service;
 
-import ibm.organisation.commenttotickettriage.ai.client.CommentAiClient;
 import ibm.organisation.commenttotickettriage.entity.Comment;
 import ibm.organisation.commenttotickettriage.repository.CommentRepository;
 import ibm.organisation.commenttotickettriage.service.dto.CommentDto;
@@ -19,7 +18,7 @@ import static org.mockito.Mockito.when;
 class CommentServiceTest {
 
     @Mock
-    private CommentAiClient commentAiClient;
+    private AiService aiService;
 
     @Mock
     private CommentRepository repository;
@@ -33,15 +32,17 @@ class CommentServiceTest {
     @Test
     void processedComment_mapsAndSavesEntity_whenCalled() {
         CommentDto dto = getDto();
-        Comment expectedEntity = new Comment();
+        Comment entity = new Comment();
+        entity.setId(1L);
 
-        when(commentMapper.toEntity(dto)).thenReturn(expectedEntity);
+        when(commentMapper.toEntity(dto)).thenReturn(entity);
+        when(repository.saveAndFlush(entity)).thenReturn(entity);
 
         commentService.processComment(dto);
 
         verify(commentMapper).toEntity(dto);
-        verify(repository).save(expectedEntity);
-        verifyNoInteractions(commentAiClient);
+        verify(repository).saveAndFlush(entity);
+        verify(aiService).getResponse(entity);
     }
 
     CommentDto getDto(){

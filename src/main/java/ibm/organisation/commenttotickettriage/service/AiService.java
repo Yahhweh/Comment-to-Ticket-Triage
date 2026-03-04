@@ -53,7 +53,6 @@ public class AiService {
         backoff = @Backoff(delay = 2000, multiplier = 2.0)
     )
     public TicketDto getResponse(Comment comment) {
-
         TicketDto ticketDto = chatClient.prompt()
             .user(u -> u.text(promptResource)
                 .param("comment", comment.getContent()))
@@ -63,9 +62,7 @@ public class AiService {
         if (ticketDto == null || ticketDto.getCategory() == null) {
             return ticketDto;
         }
-
-        ticketService.createTicket(ticketDto);
-
+        ticketService.createTicket(ticketDto, comment);
         return ticketDto;
     }
 }

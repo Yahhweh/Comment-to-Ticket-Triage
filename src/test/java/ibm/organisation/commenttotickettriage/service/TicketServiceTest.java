@@ -1,5 +1,6 @@
 package ibm.organisation.commenttotickettriage.service;
 
+import ibm.organisation.commenttotickettriage.entity.Comment;
 import ibm.organisation.commenttotickettriage.entity.Ticket;
 import ibm.organisation.commenttotickettriage.repository.TicketRepository;
 import ibm.organisation.commenttotickettriage.service.dto.TicketDto;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -32,23 +34,20 @@ class TicketServiceTest {
     private TicketService ticketService;
 
     @Test
-    void createTicket_returnsTicket_whenValidDtoProvided() {
-        TicketDto inputDto = getTicketDto();
-        inputDto.setId(null);
+    void createTicket_savesAndReturnsTicket() {
+        TicketDto dto = new TicketDto();
+        Comment comment = new Comment();
+        comment.setId(1L);
         Ticket entity = new Ticket();
-        Ticket savedEntity = new Ticket();
-        TicketDto outputDto = getTicketDto();
 
-        when(ticketMapper.toEntity(inputDto)).thenReturn(entity);
-        when(ticketRepository.save(entity)).thenReturn(savedEntity);
-        when(ticketMapper.toDto(savedEntity)).thenReturn(outputDto);
+        when(ticketMapper.toEntity(dto)).thenReturn(entity);
+        when(ticketRepository.save(entity)).thenReturn(entity);
 
-        TicketDto result = ticketService.createTicket(inputDto);
+        Ticket result = ticketService.createTicket(dto, comment);
 
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
+        assertEquals(entity, result);
+        assertEquals(comment, entity.getComment());
         verify(ticketRepository).save(entity);
-        verify(ticketMapper).toDto(savedEntity);
     }
 
     @Test
@@ -97,6 +96,6 @@ class TicketServiceTest {
     }
 
     TicketDto getTicketDto(){
-        return new TicketDto(1L, 1L, "Title", "Bug", "High", "Summary");
+        return new TicketDto(1L,1L, "Title", "Bug", "High", "Summary");
     }
 }

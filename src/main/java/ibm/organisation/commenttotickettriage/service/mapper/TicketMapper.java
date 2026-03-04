@@ -16,8 +16,10 @@ import java.util.List;
 )
 public interface TicketMapper {
 
+    @Mapping(target = "comment", ignore = true)
     Ticket toEntity(TicketDto dto);
 
+    @Mapping(source = "comment.id", target = "commentId")
     TicketDto toDto(Ticket entity);
 
     List<TicketDto> toDtoList(List<Ticket> entities);

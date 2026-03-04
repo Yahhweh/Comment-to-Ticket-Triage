@@ -1,5 +1,6 @@
 package ibm.organisation.commenttotickettriage.service;
 
+import ibm.organisation.commenttotickettriage.entity.Comment;
 import ibm.organisation.commenttotickettriage.entity.Ticket;
 import ibm.organisation.commenttotickettriage.repository.TicketRepository;
 import ibm.organisation.commenttotickettriage.service.dto.TicketDto;
@@ -34,9 +35,9 @@ public class TicketService {
     }
 
     @Transactional
-    public TicketDto createTicket(TicketDto ticketDto) {
+    public Ticket createTicket(TicketDto ticketDto, Comment comment) {
         Ticket ticket = ticketMapper.toEntity(ticketDto);
-        Ticket savedTicket = ticketRepository.save(ticket);
-        return ticketMapper.toDto(savedTicket);
+        ticket.setComment(comment);
+        return ticketRepository.save(ticket);
     }
 }

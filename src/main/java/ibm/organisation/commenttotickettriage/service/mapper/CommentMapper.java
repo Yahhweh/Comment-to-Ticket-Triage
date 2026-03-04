@@ -19,4 +19,6 @@ public interface CommentMapper {
     @Mapping(target = "content", source = "content")
     Comment toEntity(CommentDto dto);
 
+    CommentDto toDto(Comment comment);
+
 }

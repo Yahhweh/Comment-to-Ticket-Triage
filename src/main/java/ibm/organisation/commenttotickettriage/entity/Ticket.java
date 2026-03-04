@@ -20,6 +20,10 @@ public class Ticket {
     @Column(name = "title", nullable = false, length = 255)
     private String title;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "comment_id", referencedColumnName = "id", unique = true)
+    private Comment comment;
+
     @Column(name = "category", length = 50, nullable = false)
     private String category;
 

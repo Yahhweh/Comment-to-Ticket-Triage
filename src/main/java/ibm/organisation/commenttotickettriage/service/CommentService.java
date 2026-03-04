@@ -8,6 +8,9 @@
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
 
+    import java.util.List;
+    import java.util.stream.Collectors;
+
     @Service
     public class CommentService {
         private final CommentRepository repository;
@@ -27,5 +30,11 @@
             aiService.getResponse(comment);
 
             return comment.getId();
+        }
+
+        public List<CommentDto> getAllComments() {
+            return repository.findAll().stream()
+                .map(commentMapper::toDto)
+                .collect(Collectors.toList());
         }
     }

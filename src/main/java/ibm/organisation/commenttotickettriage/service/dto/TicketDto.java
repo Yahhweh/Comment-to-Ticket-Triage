@@ -14,6 +14,9 @@ public class TicketDto {
     @Null
     private Long id;
 
+    @NotNull
+    private Long commentId;
+
     @NotBlank(message = "{ticket.title.notblank}")
     private String title;
 
