@@ -39,7 +39,7 @@ class CommentRestControllerTest {
         mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(validDto)))
-            .andExpect(status().isCreated())
+            .andExpect(status().isOk())
             .andExpect(content().string(SUCCESS_RESPONSE));
 
         verify(commentService).processComment(any(CommentDto.class));

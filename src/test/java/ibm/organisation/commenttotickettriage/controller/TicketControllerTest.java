@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(TicketController.class)
 class TicketControllerTest {
 
-    private static final String BASE_URL = "/ui/tickets";
+    private static final String BASE_URL = "/ui/ticket/all";
     private static final String VIEW_TICKETS = "tickets";
     private static final String MODEL_ATTRIBUTE_TICKETS = "tickets";
     private static final String MODEL_ATTRIBUTE_PAGE = "page";

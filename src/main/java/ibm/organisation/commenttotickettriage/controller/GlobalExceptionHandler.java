@@ -1,5 +1,6 @@
 package ibm.organisation.commenttotickettriage.controller;
 
+import ibm.organisation.commenttotickettriage.controller.rest.CommentRestController;
 import ibm.organisation.commenttotickettriage.controller.rest.TicketRestController;
 import ibm.organisation.commenttotickettriage.service.ServiceException;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice(assignableTypes = {
-    CommentController.class,
+    CommentRestController.class,
     TicketRestController.class
 })
 public class GlobalExceptionHandler {
