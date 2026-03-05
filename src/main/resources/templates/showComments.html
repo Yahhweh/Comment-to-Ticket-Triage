@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{static/style :: cssPart}">
+    <meta charset="UTF-8">
+    <title>Comment List</title>
+</head>
+<body>
+
+<div class="ticket" th:each="comment : ${comments}">
+    <h2>Comment #<span th:text="${comment.getId()}"></span></h2>
+    <p class="summary" th:text="${comment.getContent()}"></p>
+</div>
+
+<div th:insert="~{page :: pageNavigation}">page</div>
+
+</body>
+</html>

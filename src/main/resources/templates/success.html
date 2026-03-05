@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{static/style :: cssPart}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Success</title>
 </head>
 <body>
-<h1> your message was sent</h1>
+<div class="ticket">
+    <h2>✓ Your message was sent</h2>
+    <p class="summary">
+        Our support team will review it shortly.
+    </p>
+    <a href="/comment">Submit another</a>
+    &nbsp;|&nbsp;
+    <a href="/tickets">View tickets</a>
+</div>
 </body>
 </html>

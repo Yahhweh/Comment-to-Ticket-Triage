@@ -81,3 +81,51 @@ TITLE: Dark mode UI theme toggle
 CATEGORY: feature
 PRIORITY: low
 SUMMARY: User is requesting a dark mode user interface theme to improve visibility and reduce eye strain
+===
+MESSAGE: I've been trying to reset my password for two hours, but the link sent to my email leads to a 404 error page.TITLE: Password reset link redirection failure (404)
+CATEGORY: bug
+PRIORITY: high
+SUMMARY: The automated password recovery system is generating invalid URLs, preventing users from regaining access to their accounts.
+===
+MESSAGE: It would be very helpful to have an automated export of weekly activity logs sent to my email every Monday morning.
+TITLE: Recurring weekly activity log email export
+CATEGORY: feature
+PRIORITY: low
+SUMMARY: User requests a functional enhancement to receive scheduled performance or activity reports via email on a weekly basis.
+===
+MESSAGE: My last invoice shows a charge for the 'Pro' tier, but I downgraded to 'Basic' three weeks ago. I need a refund for the difference.
+TITLE: Incorrect tier billing after downgrade
+CATEGORY: billing
+PRIORITY: high
+SUMMARY: A billing discrepancy occurred where a customer was charged for a higher service tier despite a prior downgrade request.
+==
+MESSAGE: I've been trying to reset my password for two hours, but the link sent to my email leads to a 404 error page.
+TITLE: Password reset link redirection failure (404)
+CATEGORY: bug
+PRIORITY: high
+SUMMARY: The automated password recovery system is generating invalid URLs, preventing users from regaining access to their accounts.
+===
+MESSAGE: It would be very helpful to have an automated export of weekly activity logs sent to my email every Monday morning.
+TITLE: Recurring weekly activity log email export
+CATEGORY: feature
+PRIORITY: low
+SUMMARY: User requests a functional enhancement to receive scheduled performance or activity reports via email on a weekly basis.
+===
+MESSAGE: My last invoice shows a charge for the 'Pro' tier, but I downgraded to 'Basic' three weeks ago. I need a refund for the difference.
+TITLE: Incorrect tier billing after downgrade
+CATEGORY: billing
+PRIORITY: high
+SUMMARY: A billing discrepancy occurred where a customer was charged for a higher service tier despite a prior downgrade request.
+===
+MESSAGE: I need to change the primary administrator for our organization because the current one has left the company.
+TITLE: Primary administrator ownership transfer
+CATEGORY: account
+PRIORITY: medium
+SUMMARY: Request to modify organizational permissions and transfer administrative control due to internal staffing changes.
+===
+MESSAGE: The system is great! Just wanted to say thanks to the support team for helping me out yesterday.
+TITLE: Positive user feedback and appreciation
+CATEGORY: other
+PRIORITY: low
+SUMMARY: General non-actionable feedback from a user expressing satisfaction with the service and support interaction.
+

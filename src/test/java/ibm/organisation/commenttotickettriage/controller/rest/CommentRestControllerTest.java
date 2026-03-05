@@ -3,7 +3,6 @@ package ibm.organisation.commenttotickettriage.controller.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ibm.organisation.commenttotickettriage.service.CommentService;
 import ibm.organisation.commenttotickettriage.service.dto.CommentDto;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,10 +17,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CommentRequestRestController.class)
-class CommentRequestRestControllerTest {
+@WebMvcTest(CommentRestController.class)
+class CommentRestControllerTest {
 
-    private static final String BASE_URL = "/comments/api";
+    private static final String BASE_URL = "/comments";
     private static final String SUCCESS_RESPONSE = "Comment processed";
 
     @Autowired

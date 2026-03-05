@@ -1,5 +1,6 @@
 package ibm.organisation.commenttotickettriage.controller;
 
+import ibm.organisation.commenttotickettriage.controller.rest.TicketRestController;
 import ibm.organisation.commenttotickettriage.service.ServiceException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,10 @@ import java.net.URI;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RestControllerAdvice
+@RestControllerAdvice(assignableTypes = {
+    CommentController.class,
+    TicketRestController.class
+})
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)

@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CommentController.class)
 class CommentControllerTest {
 
-    private static final String BASE_URL = "/comment";
+    private static final String BASE_URL = "/ui/comment";
     private static final String VIEW_COMMENTS = "comments";
     private static final String VIEW_SUCCESS = "success";
     private static final String VIEW_FAILED = "failed";

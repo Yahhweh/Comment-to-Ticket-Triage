@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Mapper(
-    unmappedTargetPolicy =ReportingPolicy.IGNORE,
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
     componentModel = "spring",
     imports = {LocalDateTime.class}

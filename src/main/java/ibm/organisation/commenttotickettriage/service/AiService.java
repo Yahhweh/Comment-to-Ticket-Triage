@@ -48,7 +48,7 @@ public class AiService {
     }
 
     @Retryable(
-        retryFor = { RuntimeException.class },
+        retryFor = {RuntimeException.class},
         maxAttempts = 3,
         backoff = @Backoff(delay = 2000, multiplier = 2.0)
     )

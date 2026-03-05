@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{static/style :: cssPart}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Failed</title>
 </head>
 <body>
-<h1>
-    your message is failed
-</h1>
+<div class="ticket">
+    <h2>✗ Submission failed</h2>
+    <p class="summary">
+        Please check your input and try again.
+    </p>
+    <a href="/comment">Go back</a>
+</div>
 </body>
 </html>
