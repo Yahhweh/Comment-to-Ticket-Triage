@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{static/style :: cssPart}">
+    <meta charset="UTF-8">
+    <title>Ticket List</title>
+</head>
+<body>
+
+<div class="ticket" th:each="ticket : ${tickets}">
+    <h2 th:text="${ticket.getTitle()}"></h2>
+
+    <div>
+        <span class="badge" th:text="${ticket.getCommentId()}"></span>
+        <span class="badge" th:text="${ticket.getCategory()}"></span>
+        <span class="badge" th:text="${ticket.getPriority()}"></span>
+    </div>
+
+    <p class="summary" th:text="${ticket.getSummary()}"></p>
+</div>
+
+<div th:insert="~{page :: pageNavigation}">page</div>
+</body>
+</html>

@@ -16,9 +16,10 @@ NON-ACTIONABLE strictly means:
 If the TARGET COMMENT is NON-ACTIONABLE, return exactly this empty JSON object:
 \{\}
 
-CRITICAL JSON FORMATTING RULES:
-1. Do NOT escape single quotes inside strings. Use "doesn't", never "doesn\'t".
-2. Escape ONLY double quotes (\") and backslashes (\\).
+CRITICAL JSON FORMATTING RULES (RFC 8259 Strict Compliance):
+1. Do NOT escape single quotes inside strings. Example: use "doesn't", NEVER "doesn\'t".
+2. Escape ONLY double quotes (\"), backslashes (\\), and standard control characters (e.g., \n, \t).
+3. Ensure the output is valid, strictly parsable JSON.
 
 If the TARGET COMMENT is ACTIONABLE, return a JSON object strictly matching this format:
 \{

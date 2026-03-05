@@ -1,8 +1,9 @@
-package ibm.organisation.commenttotickettriage.controller;
+package ibm.organisation.commenttotickettriage.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ibm.organisation.commenttotickettriage.service.CommentService;
 import ibm.organisation.commenttotickettriage.service.dto.CommentDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -11,14 +12,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CommentRequestController.class)
-class CommentRequestControllerTest {
+@WebMvcTest(CommentRequestRestController.class)
+class CommentRequestRestControllerTest {
+
+    private static final String BASE_URL = "/comments/api";
+    private static final String SUCCESS_RESPONSE = "Comment processed";
 
     @Autowired
     private MockMvc mockMvc;
@@ -30,27 +34,31 @@ class CommentRequestControllerTest {
     private CommentService commentService;
 
     @Test
-    void createComment_returnsOk_whenValidRequest() throws Exception {
+    void createComment_whenValidRequest_returnCreated() throws Exception {
         CommentDto validDto = createCommentDto();
 
-        mockMvc.perform(post("/comments")
+        mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(validDto)))
             .andExpect(status().isCreated())
-            .andExpect(content().string("Comment processed"));
+            .andExpect(content().string(SUCCESS_RESPONSE));
+
+        verify(commentService).processComment(any(CommentDto.class));
     }
 
     @Test
-    void createComment_returnsBadRequest_whenValidationFails() throws Exception {
+    void createComment_whenValidationFails_returnBadRequest() throws Exception {
         String invalidJson = "{}";
 
-        mockMvc.perform(post("/comments")
+        mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(invalidJson))
             .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(commentService);
     }
 
-    CommentDto createCommentDto() {
+    private CommentDto createCommentDto() {
         CommentDto commentDto = new CommentDto();
         commentDto.setContent("smth bad");
         return commentDto;

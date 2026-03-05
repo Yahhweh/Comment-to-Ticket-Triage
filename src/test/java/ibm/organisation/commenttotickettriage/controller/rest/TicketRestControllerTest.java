@@ -1,8 +1,9 @@
-package ibm.organisation.commenttotickettriage.controller;
+package ibm.organisation.commenttotickettriage.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ibm.organisation.commenttotickettriage.service.TicketService;
 import ibm.organisation.commenttotickettriage.service.dto.TicketDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,8 +19,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(TicketController.class)
-class TicketControllerTest {
+@WebMvcTest(TicketRestController.class)
+class TicketRestControllerTest {
+
+    private static final String BASE_URL = "/tickets/api";
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,13 +34,13 @@ class TicketControllerTest {
     private TicketService ticketService;
 
     @Test
-    void getAllTickets_returnsOkAndTicketList() throws Exception {
+    void getAllTickets_whenCalled_returnOkAndTicketList() throws Exception {
         TicketDto ticketDto = createTicketDto();
         List<TicketDto> tickets = List.of(ticketDto);
 
         when(ticketService.getAllTickets()).thenReturn(tickets);
 
-        mockMvc.perform(get("/tickets")
+        mockMvc.perform(get(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().json(objectMapper.writeValueAsString(tickets)));
@@ -46,13 +49,13 @@ class TicketControllerTest {
     }
 
     @Test
-    void getTicketById_returnsOkAndTicket() throws Exception {
+    void getTicketById_whenValidId_returnOkAndTicket() throws Exception {
         Long ticketId = 1L;
         TicketDto ticketDto = createTicketDto();
 
         when(ticketService.getTicketById(ticketId)).thenReturn(ticketDto);
 
-        mockMvc.perform(get("/tickets/{id}", ticketId)
+        mockMvc.perform(get(BASE_URL + "/{id}", ticketId)
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().json(objectMapper.writeValueAsString(ticketDto)));

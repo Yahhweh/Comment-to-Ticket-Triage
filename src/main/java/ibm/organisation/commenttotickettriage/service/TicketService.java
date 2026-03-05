@@ -6,6 +6,8 @@ import ibm.organisation.commenttotickettriage.repository.TicketRepository;
 import ibm.organisation.commenttotickettriage.service.dto.TicketDto;
 import ibm.organisation.commenttotickettriage.service.mapper.TicketMapper;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +41,11 @@ public class TicketService {
         Ticket ticket = ticketMapper.toEntity(ticketDto);
         ticket.setComment(comment);
         return ticketRepository.save(ticket);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<TicketDto> findAll(Pageable pageable){
+        Page<TicketDto> tickets = ticketRepository.findAll(pageable).map(ticketMapper::toDto);;
+        return tickets;
     }
 }

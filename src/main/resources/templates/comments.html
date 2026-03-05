@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{static/style :: cssPart}">
+    <meta charset="UTF-8">
+    <title>Post Comment</title>
+</head>
+<body>
+
+<div class="ticket">
+    <h2>Your message</h2>
+    <form th:action="@{/comment}" th:object="${comment}" method="post">
+        <div class="summary">
+            <label>
+                <textarea th:field="*{content}" rows="4" placeholder="Your message ...." required></textarea>
+            </label>
+        </div>
+        <button type="submit" class="badge">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

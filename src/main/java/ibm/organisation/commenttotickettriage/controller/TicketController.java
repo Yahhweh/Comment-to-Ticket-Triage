@@ -1,29 +1,37 @@
 package ibm.organisation.commenttotickettriage.controller;
 
+import ibm.organisation.commenttotickettriage.entity.Ticket;
 import ibm.organisation.commenttotickettriage.service.TicketService;
 import ibm.organisation.commenttotickettriage.service.dto.TicketDto;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import ibm.organisation.commenttotickettriage.service.mapper.TicketMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/tickets")
+@Controller
 public class TicketController {
 
-    private final TicketService ticketService;
+    TicketService service;
 
-    public TicketController(TicketService ticketService) {
-        this.ticketService = ticketService;
+    public TicketController(TicketService service) {
+        this.service = service;
     }
 
-    @GetMapping
-    public ResponseEntity<List<TicketDto>> getAllTickets() {
-        return ResponseEntity.ok(ticketService.getAllTickets());
-    }
+    @GetMapping(value = "/tickets")
+    public String getTickets(Model model,
+                             @PageableDefault(size = 3)Pageable pageable){
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TicketDto> getTicketById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(ticketService.getTicketById(id));
+        Page<TicketDto> page = service.findAll(pageable);
+
+        model.addAttribute("tickets", page.getContent());
+        model.addAttribute("page", page);
+        model.addAttribute("url", "tickets");
+
+        return "tickets";
     }
 }

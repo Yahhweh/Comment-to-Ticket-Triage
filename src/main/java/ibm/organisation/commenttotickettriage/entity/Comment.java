@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Comment {
 
-    public Comment(String content, LocalDateTime timestamp, boolean processed) {
+    public Comment(String content, LocalDateTime timestamp) {
         this.content = content;
         this.timestamp = timestamp;
     }
