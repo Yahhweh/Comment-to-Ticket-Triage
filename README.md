@@ -45,15 +45,15 @@ App will start on http://localhost:8080
 
 
 ## API
-POST /comments (submit a new comment)
-GET /comments (get all comments)
-GET /tickets (get all tickets)
-GET /tickets/{ticketId} (get ticket by id)
+- POST /comments (submit a new comment)
+- GET /comments (get all comments)
+- GET /tickets (get all tickets)
+- GET /tickets/{ticketId} (get ticket by id)
 
 ## UI
-/ui/comment (submit a comment)
-/ui/comment/all (view all comments)
-/ui/ticket/all (view all tickets)
+- /ui/comment (submit a comment)
+- /ui/comment/all (view all comments)
+- /ui/ticket/all (view all tickets)
 
 
 
