@@ -1,12 +1,9 @@
 package ibm.organisation.commenttotickettriage.service.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Null;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,5 +14,6 @@ public class CommentDto {
     private Long id;
 
     @NotBlank(message = "{comment.content.notblank}")
+    @Size(min = 4, max = 100, message = "{comment.content.size}")
     private String content;
 }

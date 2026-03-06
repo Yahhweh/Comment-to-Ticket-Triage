@@ -3,6 +3,7 @@ package ibm.organisation.commenttotickettriage.service;
 import ibm.organisation.commenttotickettriage.entity.Comment;
 import ibm.organisation.commenttotickettriage.service.dto.TicketDto;
 import ibm.organisation.commenttotickettriage.service.examples.ExamplesLoader;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.vectorstore.SearchRequest;
@@ -11,14 +12,16 @@ import org.springframework.core.io.Resource;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
 
+@Slf4j
 @Component
 public class AiService {
 
     private final ChatClient chatClient;
     private final TicketService ticketService;
     private final Resource promptResource;
-    private final ExamplesLoader examplesLoader;
 
     public AiService(ChatClient.Builder chatClientBuilder,
                      TicketService ticketService,
@@ -26,7 +29,6 @@ public class AiService {
                      @Value("classpath:/prompts/ticket-analysis.st") Resource promptResource) {
 
         this.ticketService = ticketService;
-        this.examplesLoader = examplesLoader;
         this.promptResource = promptResource;
 
         String fewShotInstruction = """
@@ -48,21 +50,46 @@ public class AiService {
     }
 
     @Retryable(
-        retryFor = {RuntimeException.class},
+        retryFor = {HttpServerErrorException.class},
         maxAttempts = 3,
         backoff = @Backoff(delay = 2000, multiplier = 2.0)
     )
     public TicketDto getResponse(Comment comment) {
-        TicketDto ticketDto = chatClient.prompt()
-            .user(u -> u.text(promptResource)
-                .param("comment", comment.getContent()))
-            .call()
-            .entity(TicketDto.class);
+        log.info("Analyzing comment ID={}", comment.getId());
+        try {
+            TicketDto ticketDto = chatClient.prompt()
+                .user(u -> u.text(promptResource)
+                    .param("comment", comment.getContent()))
+                .call()
+                .entity(TicketDto.class);
 
-        if (ticketDto == null || ticketDto.getCategory() == null) {
+            if (ticketDto == null) {
+                log.info("Comment ID={} - AI returned null, NON-ACTIONABLE", comment.getId());
+                return null;
+            }
+
+            if (ticketDto.getCategory() == null || ticketDto.getCategory().isBlank() ||
+                ticketDto.getTitle() == null || ticketDto.getTitle().isBlank() ||
+                ticketDto.getPriority() == null || ticketDto.getPriority().isBlank() ||
+                ticketDto.getSummary() == null || ticketDto.getSummary().isBlank()) {
+
+                log.info("Comment ID={} - incomplete data, NON-ACTIONABLE", comment.getId());
+                return null;
+            }
+
+            log.info("Comment ID={} - ACTIONABLE, creating ticket: category={}, priority={}",
+                comment.getId(), ticketDto.getCategory(), ticketDto.getPriority());
+
+            ticketService.createTicket(ticketDto, comment);
             return ticketDto;
+
+        } catch (HttpServerErrorException e) {
+            log.error("Retryable error analyzing comment ID={}: {}", comment.getId(), e.getMessage());
+            throw e;
+
+        } catch (Exception e) {
+            log.error("Error analyzing comment ID={}: {}", comment.getId(), e.getMessage(), e);
+            return null;
         }
-        ticketService.createTicket(ticketDto, comment);
-        return ticketDto;
     }
 }

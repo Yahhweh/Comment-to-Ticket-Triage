@@ -2,17 +2,18 @@ package ibm.organisation.commenttotickettriage.service;
 
 import ibm.organisation.commenttotickettriage.entity.Comment;
 import ibm.organisation.commenttotickettriage.service.dto.CommentDto;
+import ibm.organisation.commenttotickettriage.service.dto.TicketDto;
 import ibm.organisation.commenttotickettriage.repository.CommentRepository;
 import ibm.organisation.commenttotickettriage.service.mapper.CommentMapper;
-import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class CommentService {
     private final CommentRepository repository;
@@ -27,9 +28,18 @@ public class CommentService {
     }
 
     public long processComment(CommentDto commentDto) {
+        log.info("Processing comment: {}", commentDto.getContent().substring(0, Math.min(50, commentDto.getContent().length())));
+
         Comment comment = commentMapper.toEntity(commentDto);
         repository.saveAndFlush(comment);
-        aiService.getResponse(comment);
+
+        TicketDto ticketDto = aiService.getResponse(comment);
+
+        if (ticketDto != null) {
+            log.info("Comment ID={} resulted in ticket creation", comment.getId());
+        } else {
+            log.info("Comment ID={} did not require a ticket (NON-ACTIONABLE or error)", comment.getId());
+        }
 
         return comment.getId();
     }

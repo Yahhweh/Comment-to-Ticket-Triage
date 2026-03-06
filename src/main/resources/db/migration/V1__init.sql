@@ -15,4 +15,3 @@ CREATE TABLE tickets (
 );
 
 CREATE INDEX idx_tickets_category ON tickets(category);
-CREATE INDEX idx_comments_processed ON comments(processed);
