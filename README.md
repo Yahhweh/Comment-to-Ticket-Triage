@@ -43,6 +43,13 @@ token: YOUR_TOKEN_HERE
 
 App will start on http://localhost:8080
 
+## Database
+H2 console available at: http://localhost:8080/h2-console
+
+JDBC URL: jdbc:h2:mem:pulsedesk
+Username: user
+Password: 1234
+
 
 ## API
 - POST /comments (submit a new comment)
